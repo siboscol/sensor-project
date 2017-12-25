@@ -1,5 +1,5 @@
 // Import the sensor library
-const sensor = require(node-dht-sensor);
+const sensor = require('node-dht-sensor');
 
 // The first argument is the sensor number. In this case 22 represents DHT22 sensor
 // The second argument is the pin number to read from, for this example pin to pin 2
