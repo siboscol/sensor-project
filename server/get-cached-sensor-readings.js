@@ -14,7 +14,7 @@ setInterval( () => {
             return console.error(err);
         }
         /* Logging live sensor readings */
-        console.log('Live sensor readings.');
+        console.log('Live sensor readings: ' + Date());
         console.log('Temperature: ' + temperature);
         console.log('Humidity: ' + humidity + '\n');
         /* Set the value of the cache on receiving new readings */
