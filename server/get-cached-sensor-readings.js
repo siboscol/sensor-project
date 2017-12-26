@@ -15,11 +15,11 @@ setTimeout( () => {
         }
         console.log('Live sensor readings.');
         console.log('Temperature: ' + temperature);
-        console.log('Humidity: ' + humidity)
+        console.log('Humidity: ' + humidity);
         /* Set the value of the cache on receiving new readings */
         cache.temperature = temperature;
         cache.humidity = humidity;
-    })
+    });
 }, 2000);
 
 /* The function that we expose only returns the cached values, and don't make a call to the sensor interface everytime */
