@@ -13,6 +13,9 @@ setTimeout( () => {
         if(err) {
             return console.error(error);
         }
+        console.log('Live sensor readings.');
+        console.log('Temperature: ' + temperature);
+        console.log('Humidity: ' + humidity)
         /* Set the value of the cache on receiving new readings */
         cache.temperature = temperature;
         cache.humidity = humidity;
