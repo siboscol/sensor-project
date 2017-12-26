@@ -4,7 +4,7 @@ const fetchTemperature = () => {
 
     /* First, we instanciate the first promise, which call the API a /temperature of our server. */
     fetch('/temperature').then(results => {
-        const temperatureDisplay = document.getElementById('temperature-display').innerHTML = results;
+        const temperatureDisplay = document.getElementById('temperature-display').innerHTML = results.temperature;
     });
 }
 

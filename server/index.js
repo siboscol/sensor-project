@@ -11,7 +11,9 @@ app.use('/public', express.static(path.join(__dirname, '../', 'public')));
 
 // Routes
 app.get('/temperature', (req, res) => {
-    res.json(getCachedSensorReadings.getTemperature().toFixed(1));
+    res.json({
+        "temperature": getCachedSensorReadings.getTemperature().toFixed(1)
+    });
 });
 
 app.get('/humidity', (req, res) => {
