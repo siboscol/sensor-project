@@ -6,7 +6,7 @@ const getCachedSensorReadings = require('./get-cached-sensor-readings');
 /* Here, we are introduced to express middleware.
 Middleware is a fancy word to describe a set of actions that have to take place before the request handler.
 In the below statement, we use the express static middleware, and bind it to the /public route.*/
-console.log('Path: ' + path.join(__dirname, '../', 'public'));
+// Getting parent dir folder with '../'
 app.use('/public', express.static(path.join(__dirname, '../', 'public')));
 
 // Routes
