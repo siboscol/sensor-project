@@ -5,13 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sensor Monitoring Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <p>Temperature: </p>
-    <p id="temperature-display"><strong>Loading temperature...</strong></p>
-    <p>Humidity: </p>
-    <p id="humidity-display"><strong>Loading humidity...</strong></p>
-
+    <header>Sensor Dashboard</header>
+    <div class="container">
+        <div class="temperature">
+            <p class="title">Temperature: </p>
+            <p class="value" id="temperature-display">Loading...</p>
+            <p class="unit">°C</p>
+        </div>
+        <div class="humidity">
+            <p class="title">Humidity: </p>
+            <p class="value" id="humidity-display">Loading...</p>
+            <p class="unit">%</p>
+        </div>    
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
