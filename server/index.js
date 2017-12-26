@@ -11,13 +11,11 @@ app.use('/public', express.static(path.join(__dirname, '../', 'public')));
 
 // Routes
 app.get('/temperature', (req, res) => {
-    res.json({
-        "temperature": getCachedSensorReadings.getTemperature().toFixed(1)
-    });
+    res.send(getCachedSensorReadings.getTemperature().toFixed(1));
 });
 
 app.get('/humidity', (req, res) => {
-    res.json(getCachedSensorReadings.getHumidity().toFixed(1));
+    res.send(getCachedSensorReadings.getHumidity().toFixed(1));
 });
 
 // Opening the server on port 3000
