@@ -11,7 +11,7 @@ No more than 0.5 Hz sampling rate (once every 2 seconds) */
 setInterval( () => {
     getSensorReadings((err, temperature, humidity) => {
         if(err) {
-            return console.error(error);
+            return console.error(err);
         }
         /* Logging live sensor readings */
         console.log('Live sensor readings.');
