@@ -1,22 +1,16 @@
+import { getTemperature } from './get-cached-sensor-readings';
+
 const express = require('express');
 const app = express();
-const getSensorReadings = require('./get-sensor-readings');
+const getCachedSensorReadings = require('./get-cached-sensor-readings');
 
 
 app.get('/temperature', (req, res) => {
-    getSensorReadings((err, temperature, humidity) => {
-        if(!err) {
-            res.send(temperature.toFixed(1) + '°C');
-        }
-    });
+    res.send(getCachedSensorReadings.getTemperature().toFixed(1) + '°C');
 });
 
 app.get('/humidity', (req, res) => {
-    getSensorReadings((err, temperature, humidity) => {
-        if(!err) {
-            res.send(humidity.toFixed(1) + '%');
-        }
-    });
+    res.send(getCachedSensorReadings.getHumidity().toFixed(1) + '%');
 });
 
 app.listen(3000, () => {
