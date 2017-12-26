@@ -1,5 +1,5 @@
 fetch('/temperature').then(results => {
-    results.text();
+    return results.text();
 }).then(text => {
     console.log('Temperature: ' + text);
 });
