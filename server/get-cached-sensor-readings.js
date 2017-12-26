@@ -4,11 +4,11 @@ const getSensorReadings = require('./get-sensor-readings');
 const cache = {
     temperature: null,
     humidity: null
-}
+};
 
 /* Run a function to get sensor readings every 2 seconds (the same sampling rate as our sensor).
 No more than 0.5 Hz sampling rate (once every 2 seconds) */
-setTimeout( () => {
+setInterval( () => {
     getSensorReadings((err, temperature, humidity) => {
         if(err) {
             return console.error(error);
