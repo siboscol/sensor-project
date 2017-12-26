@@ -7,6 +7,6 @@ sensor.read(22, 2, (err, temperature, humidity) => {
     // After reading the sensor, we get the temperature and humidity reading
     if(!err) {
         // If there is no error, log the readings to the console
-        console.log('temp:' + temperature.toFixed(1) + '°C, ' + 'humidity: ' + humidity.toFixed(1) + '%');
+        console.log('temperature:' + temperature.toFixed(1) + '°C, ' + 'humidity: ' + humidity.toFixed(1) + '%');
     }
 });
