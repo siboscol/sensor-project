@@ -1,5 +1,3 @@
-import { getTemperature } from './get-cached-sensor-readings';
-
 const express = require('express');
 const app = express();
 const getCachedSensorReadings = require('./get-cached-sensor-readings');
