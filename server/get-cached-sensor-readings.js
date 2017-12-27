@@ -21,7 +21,7 @@ setInterval( () => {
         cache.temperature = temperature;
         cache.humidity = humidity;
     });
-}, 2000);
+}, 600000);
 
 /* The function that we expose only returns the cached values, and don't make a call to the sensor interface everytime */
 module.exports.getTemperature = () => cache.temperature;

@@ -29,4 +29,4 @@ const fetchHumidity = () => {
 setInterval(() => {
     fetchTemperature();
     fetchHumidity();
-}, 2000);
+}, 600000);
