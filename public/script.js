@@ -1,4 +1,5 @@
-import { temperatureChart, humidityChart} from 'charts';
+import {temperatureChart} from './charts.js';
+import {humidityChart} from './charts.js';
 
 const fetchTemperature = () => {
     /* The fetch API uses a promise based sintax.
