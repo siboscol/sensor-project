@@ -27,7 +27,7 @@ const fetchHumidity = () => {
 setInterval(() => {
     fetchTemperature();
     fetchHumidity();
-}, 120000);
+}, 2000);
 
 /* Get the contex of the temperature canvas element. */
 const temperatureCanvasCtX = document.getElementById('temperature-chart').getContext('2d');
