@@ -102,8 +102,8 @@ const humidityChart = new Chart(humitityCanvasCtX,
         scales: {
             yAxes: [{
                 ticks: {
-                    suggestedMin: 10,
-                    suggestedMax: 40
+                    suggestedMin: 0,
+                    suggestedMax: 100
                 }
             }]
         }
