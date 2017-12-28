@@ -20,13 +20,14 @@ const fetchHumidity = () => {
         return results.json();
     }).then(data => {
         pushData(humidityChart.data.labels, getNowTimeStamp, 10);
+        pushData(humidityChart.data.datasets[0].data, data.value, 10);
         const humidityDisplay = document.getElementById('humidity-display').innerHTML = '<strong>' + data.value + '</strong>';
     });
 }
 
 const pushData = (arr, value, maxLen) => {
     arr.push(value);
-    if (arr.lenght > maxLen) {
+    if (arr.length > maxLen) {
         arr.shift();
     }
 }
