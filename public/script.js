@@ -19,7 +19,7 @@ const fetchHumidity = () => {
     fetch('/humidity').then(results => {
         return results.json();
     }).then(data => {
-        pushData(humidityChart.data.labels, getNowTimeStamp, 10);
+        pushData(humidityChart.data.labels, getNowTimeStamp(), 10);
         pushData(humidityChart.data.datasets[0].data, data.value, 10);
         const humidityDisplay = document.getElementById('humidity-display').innerHTML = '<strong>' + data.value + '</strong>';
     });
