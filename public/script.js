@@ -1,5 +1,4 @@
-import {temperatureChart} from './charts.js';
-import {humidityChart} from './charts.js';
+import {temperatureChart, humidityChart} from './charts.js';
 
 const fetchTemperature = () => {
     /* The fetch API uses a promise based sintax.
@@ -15,6 +14,7 @@ const fetchTemperature = () => {
         The value of the sensor reading is therefore available in 'data.value' */
         pushData(temperatureChart.data.labels, getNowTimeStamp(), 10);
         pushData(temperatureChart.data.datasets[0].data, data.value, 10);
+        temperatureChart.update();
         const temperatureDisplay = document.getElementById('temperature-display').innerHTML = '<strong>' + data.value + '</strong>';
     });
 }
