@@ -34,7 +34,7 @@ const pushData = (arr, value, maxLen) => {
 
 const getNowTimeStamp = () => {
     const now = new Date();
-    const timeNow = now.getHours() + ':' + now.getMinutes + ':' + now.getSeconds();
+    const timeNow = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
     return timeNow;
 }
 
