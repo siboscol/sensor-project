@@ -1,3 +1,4 @@
+/* Import temperature and humidity chart configuration from charts module using ES6. */
 import {temperatureChart, humidityChart} from './charts.js';
 
 const fetchTemperature = () => {
@@ -8,13 +9,24 @@ const fetchTemperature = () => {
     fetch('/temperature').then(results => {
         /* We want results converted to json, so we use the fetch results 'json' method, which returns a promise with the JSON data instead of the string. */
         return results.json();
+        
     }).then(data => {
+        /* Add the data to the chart dataset.
+        The x-axis here is time, with the time of measurement added as its value. 
+        Since it is measure in regular intervals, we do not need to scale it, and can assume a uniform regular interval.
+        The y-axis is temperature, which is stored in 'data.value'.
+        The data is being pushed directly into the configuration we described in charts.js.
+        A maximum length of 10 is maintained. Which means that after 10 readings are filled in the dataset, the older readings will start being pushed out. */
+        pushData(temperatureChart.data.labels, getNowTimeStamp(), 10);
+        pushData(temperatureChart.data.datasets[0].data, data.value, 10);
+
+        /* 'temperatureChart' is our ChartJs instance. 
+        The 'update' method looks for changes in the dataset and axes, and animates and updates the chart accordingly. */
+        temperatureChart.update();
+
         /* In our server API route handler, the format of returned data was an object with a 'value' property. */
         /* Get the 'p' element as a variable, and set its inner HTML to the response we received from the server. 
         The value of the sensor reading is therefore available in 'data.value' */
-        pushData(temperatureChart.data.labels, getNowTimeStamp(), 10);
-        pushData(temperatureChart.data.datasets[0].data, data.value, 10);
-        temperatureChart.update();
         const temperatureDisplay = document.getElementById('temperature-display').innerHTML = '<strong>' + data.value + '</strong>';
     });
 }
@@ -39,6 +51,7 @@ const pushData = (arr, value, maxLen) => {
 }
 
 const getNowTimeStamp = () => {
+    /* Note the time when the reading is obtained, and convert it to hh:mm:ss format. */
     const now = new Date();
     const timeNow = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
     return timeNow;

@@ -1,8 +1,6 @@
 /* Get the contex of the temperature canvas element. */
 const temperatureCanvasCtX = document.getElementById('temperature-chart').getContext('2d');
-/* Create a new chart on the context we just instanciated. */
-export const temperatureChart = new Chart(temperatureCanvasCtX,
-{
+const temperatureChartConfig = {
     /* We are going to show the ongoing temperature as a line chart. */
     type: 'line',
     data: {
@@ -10,9 +8,9 @@ export const temperatureChart = new Chart(temperatureCanvasCtX,
         The labels, which will form our x-axis, are suppose to represent the time at which each reading was taken.
         Finally, we add the dataset, whose data is an array of temperature values.
         The background color is set to the same value as earlier display, with some added transparency (which is why the 'rgba' representation is used) */
-        labels: ['10:30', '10.31', '10.32', '10.33'],
+        labels: [],
         datasets: [{
-            data: [12, 19, 23, 17],
+            data: [],
             backgroundColor: 'rgba(255, 205, 210, 0.5)'
         }]
     },
@@ -34,12 +32,14 @@ export const temperatureChart = new Chart(temperatureCanvasCtX,
             }]
         }
     }
-});
+};
+
+/* Create a temperature chart on the context we just instanciated. */
+export const temperatureChart = new Chart(temperatureCanvasCtX, temperatureChartConfig);
 
 /* Get the contex of the humidity canvas element. */
 const humitityCanvasCtX = document.getElementById('humidity-chart').getContext('2d');
-export const humidityChart = new Chart(humitityCanvasCtX,
-{
+const humidityChartConfig = {
     type: 'line',
     data: {
         labels: [],
@@ -63,4 +63,6 @@ export const humidityChart = new Chart(humitityCanvasCtX,
             }]
         }
     }
-});
+};
+
+export const humidityChart = new Chart(humitityCanvasCtX, humidityChartConfig);
