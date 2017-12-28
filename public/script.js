@@ -88,9 +88,9 @@ const humidityChart = new Chart(humitityCanvasCtX,
 {
     type: 'line',
     data: {
-        labels: ['10:30', '10.31', '10.32', '10.33'],
+        labels: [],
         datasets: [{
-            data: [12, 19, 23, 17],
+            data: [],
             backgroundColor: 'rgba(255, 205, 210, 0.5)'
         }]
     },
