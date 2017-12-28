@@ -19,8 +19,22 @@ const fetchHumidity = () => {
     fetch('/humidity').then(results => {
         return results.json();
     }).then(data => {
+        pushData(humidityChart.data.labels, getNowTimeStamp, 10);
         const humidityDisplay = document.getElementById('humidity-display').innerHTML = '<strong>' + data.value + '</strong>';
     });
+}
+
+const pushData = (arr, value, maxLen) => {
+    arr.push(value);
+    if (arr.lenght > maxLen) {
+        arr.shift();
+    }
+}
+
+const getNowTimeStamp = () => {
+    const now = new Date();
+    const timeNow = now.getHours() + ':' + now.getMinutes + ':' + now.getSeconds();
+    return timeNow;
 }
 
 /* Call the above defined function at regular intervals */
@@ -55,7 +69,15 @@ const temperatureChart = new Chart(temperatureCanvasCtX,
             display: false
         },
         responsive: true,
-        mantainAspectRadio: false
+        mantainAspectRadio: false,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    suggestedMin: 10,
+                    suggestedMax: 40
+                }
+            }]
+        }
     }
 });
 
@@ -76,6 +98,14 @@ const humidityChart = new Chart(humitityCanvasCtX,
             display: false
         },
         responsive: true,
-        mantainAspectRadio: false
+        mantainAspectRadio: false,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    suggestedMin: 10,
+                    suggestedMax: 40
+                }
+            }]
+        }
     }
 });
