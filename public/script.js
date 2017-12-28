@@ -38,15 +38,8 @@ const getNowTimeStamp = () => {
     return timeNow;
 }
 
-/* Call the above defined function at regular intervals */
-setInterval(() => {
-    fetchTemperature();
-    fetchHumidity();
-}, 2000);
-
 /* Get the contex of the temperature canvas element. */
 const temperatureCanvasCtX = document.getElementById('temperature-chart').getContext('2d');
-
 /* Create a new chart on the context we just instanciated. */
 const temperatureChart = new Chart(temperatureCanvasCtX,
 {
@@ -110,3 +103,9 @@ const humidityChart = new Chart(humitityCanvasCtX,
         }
     }
 });
+
+/* Call the above defined function at regular intervals */
+setInterval(() => {
+    fetchTemperature();
+    fetchHumidity();
+}, 2000);
