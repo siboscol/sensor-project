@@ -1,6 +1,6 @@
 /* Get the contex of the temperature canvas element. */
 const temperatureCanvasCtX = document.getElementById('temperature-chart').getContext('2d');
-const temperatureChartConfig = {
+export const temperatureChartConfig = {
     /* We are going to show the ongoing temperature as a line chart. */
     type: 'line',
     data: {
@@ -39,7 +39,7 @@ export const temperatureChart = new Chart(temperatureCanvasCtX, temperatureChart
 
 /* Get the contex of the humidity canvas element. */
 const humitityCanvasCtX = document.getElementById('humidity-chart').getContext('2d');
-const humidityChartConfig = {
+export const humidityChartConfig = {
     type: 'line',
     data: {
         labels: [],

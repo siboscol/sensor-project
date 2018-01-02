@@ -1,5 +1,8 @@
 const getSensorReadings = require('./get-sensor-readings');
 
+/* Import the database module. */
+const databaseOperations = require('./database-operations');
+
 /* Instanciace the cache. In this case it's a simpre variable stored in local memory */
 const cache = {
     temperature: null,
@@ -17,6 +20,11 @@ setInterval( () => {
         console.log('Live sensor readings: ' + Date());
         console.log('Temperature: ' + temperature);
         console.log('Humidity: ' + humidity + '\n');
+
+        /* In addition to storing the readings in our cache, we also store them in our database, using the methods that we exported from our module. */
+        databaseOperations.insertReadings('temperature', temperature);
+        databaseOperations.insertReadings('humidity', humidity);
+
         /* Set the value of the cache on receiving new readings */
         cache.temperature = temperature;
         cache.humidity = humidity;

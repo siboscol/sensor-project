@@ -1,5 +1,5 @@
 /* Import temperature and humidity chart configuration from charts module using ES6. */
-import {temperatureChart, humidityChart} from './charts.js';
+import {temperatureChart, humidityChart, temperatureChartConfig, humidityChartConfig} from './charts.js';
 
 const fetchTemperature = () => {
     /* The fetch API uses a promise based sintax.
@@ -17,7 +17,7 @@ const fetchTemperature = () => {
         The y-axis is temperature, which is stored in 'data.value'.
         The data is being pushed directly into the configuration we described in charts.js.
         A maximum length of 10 is maintained. Which means that after 10 readings are filled in the dataset, the older readings will start being pushed out. */
-        pushData(temperatureChart.data.labels, getNowTimeStamp(), 10);
+        pushData(temperatureChart.data.labels, getTimeStamp(), 10);
         pushData(temperatureChart.data.datasets[0].data, data.value, 10);
 
         /* 'temperatureChart' is our ChartJs instance. 
@@ -31,15 +31,46 @@ const fetchTemperature = () => {
     });
 }
 
+const fetchTemperatureHistory = () => {
+    fetch('/temperature/history').then(results => {
+        return results.json();
+    }).then(data => {
+        data.forEach(readings => {
+            /* For each readings prsent in the 'data' array, 
+            convert the time to the ISO Z format accepted by the javascript Date object.
+            Format the time and push data on the chart similar to the previous API calls. */
+            const time = new Date(readings.CreatedAt + 'Z');
+            const formattedTime = getTimeStamp(time);
+            pushData(temperatureChartConfig.data.labels, formattedTime, 10);
+            pushData(temperatureChartConfig.data.datasets[0].data, readings.value, 10);
+            temperatureChart.update();
+        });
+    });
+}
+
 /* Repeat the same steps for the humidity API */
 const fetchHumidity = () => {
     fetch('/humidity').then(results => {
         return results.json();
     }).then(data => {
-        pushData(humidityChart.data.labels, getNowTimeStamp(), 10);
+        pushData(humidityChart.data.labels, getTimeStamp(), 10);
         pushData(humidityChart.data.datasets[0].data, data.value, 10);
         humidityChart.update();
         const humidityDisplay = document.getElementById('humidity-display').innerHTML = '<strong>' + data.value + '</strong>';
+    });
+}
+
+const fetchHumidityHistory = () => {
+    fetch('/humidity/history').then(results => {
+        return results.json();
+    }).then(data => {
+        data.forEach(readings => {
+            const time = new Date(readings.CreatedAt + 'Z');
+            const formattedTime = getTimeStamp(time);
+            pushData(humidityChartConfig.data.labels, formattedTime, 10);
+            pushData(humidityChartConfig.data.datasets[0].data, readings.value, 10);
+            temperatureChart.update();
+        });
     });
 }
 
@@ -50,11 +81,13 @@ const pushData = (arr, value, maxLen) => {
     }
 }
 
-const getNowTimeStamp = () => {
+const getTimeStamp = (time) => {
     /* Note the time when the reading is obtained, and convert it to hh:mm:ss format. */
-    const now = new Date();
-    const timeNow = now.getHours() + ':' + now.getMinutes() + ':' + now.getSeconds();
-    return timeNow;
+    if (!time) {
+        const time = new Date();
+    }
+    const timeStamp = time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds();
+    return timeStamp;
 }
 
 /* Call the above defined function at regular intervals */

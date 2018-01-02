@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const app = express();
 const getCachedSensorReadings = require('./get-cached-sensor-readings');
+const databaseOperations = require('./database-operations');
 
 /* Here, we are introduced to express middleware.
 Middleware is a fancy word to describe a set of actions that have to take place before the request handler.
@@ -16,9 +17,33 @@ app.get('/temperature', (req, res) => {
     });
 });
 
+app.get('/temperature/history', (req, res) => {
+    databaseOperations.fetchLastReadings('temperature', 10, (err, results) => {
+        if(err){
+            /* If any error occued, send a 500 status to the frontend and log it. */
+            console.error(err);
+            res.status(500).end();
+        }
+        /* Return the reverse of the results obtained from the database. */
+        res.json(results.reverse());
+    });
+});
+
 app.get('/humidity', (req, res) => {
     res.json({
         value: getCachedSensorReadings.getHumidity().toFixed(1)
+    });
+});
+
+app.get('/humidity/history', (req, res) => {
+    databaseOperations.fetchLastReadings('humidity', 10, (err, results) => {
+        if(err){
+            /* If any error occued, send a 500 status to the frontend and log it. */
+            console.error(err);
+            res.status(500).end();
+        }
+        /* Return the reverse of the results obtained from the database. */
+        res.json(results.reverse());
     });
 });
 
