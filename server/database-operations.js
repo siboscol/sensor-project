@@ -1,7 +1,7 @@
 /* We have first to instanciate the "db" database instance before using it in our functions. */
 const sqlite3 = require('sqlite3');
 const path = require('path');
-const db = new sqlite3Database(path.resolve('./sqlite.db'));
+const db = new sqlite3.Database(path.resolve('./sqlite.db'));
 
 const insertReadings = (type, readings) => {
     db.run("INSERT INTO ${type} VALUES (datetime('now'), ${readings});");
