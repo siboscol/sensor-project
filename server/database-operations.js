@@ -4,7 +4,7 @@ const path = require('path');
 const db = new sqlite3.Database(path.resolve('./sqlite.db'));
 
 const insertReadings = (type, readings) => {
-    db.run(`INSERT INTO ${type} VALUES (datetime('now'), ${readings}`);
+    db.run(`INSERT INTO ${type} VALUES (datetime('now'), ${readings});`);
 }
 
 const fetchLastReadings = (type, limit, callback) => {
