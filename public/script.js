@@ -39,7 +39,7 @@ const fetchTemperatureHistory = () => {
             /* For each readings prsent in the 'data' array, 
             convert the time to the ISO Z format accepted by the javascript Date object.
             Format the time and push data on the chart similar to the previous API calls. */
-            const time = new Date(readings.CreatedAt + 'Z');
+            const time = new Date(readings.createdAt + 'Z');
             const formattedTime = getTimeStamp(time);
             pushData(temperatureChartConfig.data.labels, formattedTime, 10);
             pushData(temperatureChartConfig.data.datasets[0].data, readings.value, 10);
@@ -65,7 +65,7 @@ const fetchHumidityHistory = () => {
         return results.json();
     }).then(data => {
         data.forEach(readings => {
-            const time = new Date(readings.CreatedAt + 'Z');
+            const time = new Date(readings.createdAt + 'Z');
             const formattedTime = getTimeStamp(time);
             pushData(humidityChartConfig.data.labels, formattedTime, 10);
             pushData(humidityChartConfig.data.datasets[0].data, readings.value, 10);
