@@ -90,6 +90,10 @@ const getTimeStamp = (time) => {
     return timeStamp;
 }
 
+/* Initialize Temperature and Humidity charts. */
+fetchHumidityHistory();
+fetchTemperatureHistory();
+
 /* Call the above defined function at regular intervals */
 setInterval(() => {
     fetchTemperature();
