@@ -84,7 +84,7 @@ const pushData = (arr, value, maxLen) => {
 const getTimeStamp = (time) => {
     /* Note the time when the reading is obtained, and convert it to hh:mm:ss format. */
     if (!time) {
-        const time = new Date();
+        time = new Date();
     }
     const timeStamp = time.getHours() + ':' + time.getMinutes() + ':' + time.getSeconds();
     return timeStamp;
