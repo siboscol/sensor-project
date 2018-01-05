@@ -144,7 +144,7 @@ const getTimeStamp = (time) => {
 
 /* We first define a function to extract the parameters from the request query.
 You do not need to be connected too much with its implementation, although you could always study it as an exercise. */
-const getParameterByName = (name) {
+const getParameterByName = (name) => {
     const url = window.location.href;
     name = name.replace(/[\[\]]/g, '\\$&');
     const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
