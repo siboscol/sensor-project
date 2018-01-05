@@ -48,6 +48,34 @@ const fetchTemperatureHistory = () => {
     });
 }
 
+const fetchTemperatureRange = () => {
+    /* The getParameterByName fuction is used to get the 'start' and 'end' parameters from the query. */
+    const start = getParameterByName('start');
+    const end = getParameterByName('end');
+
+    /* These parameters are then passed on to make AJAX requests to get the range of readings from the server. */
+    fetch(`/temperature/range?start=${start}&end=${end}`).then(results => {
+        return results.json();
+    }).then( data => {
+        data.forEach(readings => {
+            const time = new Date(readings.createdAt + 'Z');
+            const formattedTime = getTimeStamp(time);
+            pushData(temperatureChartConfig.data.labels, formattedTime, 10);
+            pushData(temperatureChartConfig.data.datasets[0].data, readings.value, 10);
+            temperatureChart.update();
+        });
+    });
+
+    /* We also use this information to fecth the average by calling the required API,
+    and updating the reading display with the result. */
+    fetch(`/temperature/average?start=${start}&end=${end}`).then(results => {
+        return results.json();
+    }).then( data => {
+        temperatureDisplay,innerHTML = '<strong>' + data.value + '</strong>';
+    });
+
+}
+
 /* Repeat the same steps for the humidity API */
 const fetchHumidity = () => {
     fetch('/humidity').then(results => {
@@ -74,6 +102,30 @@ const fetchHumidityHistory = () => {
     });
 }
 
+const fetchHumidityRange = () => {
+    const start = getParameterByName('start');
+    const end = getParameterByName('end');
+
+    fetch(`/humidity/range?start=${start}&end=${end}`).then(results => {
+        return results.json();
+    }).then( data => {
+        data.forEach(readings => {
+            const time = new Date(readings.createdAt + 'Z');
+            const formattedTime = getTimeStamp(time);
+            pushData(humidityChartConfig.data.labels, formattedTime, 10);
+            pushData(humidityChartConfig.data.datasets[0].data, readings.value, 10);
+            humidityChart.update();
+        });
+    });
+
+    fetch(`/humidity/average?start=${start}&end=${end}`).then(results => {
+        return results.json();
+    }).then( data => {
+        humidityDisplay,innerHTML = '<strong>' + data.value + '</strong>';
+    });
+}
+
+/* Util functions. */
 const pushData = (arr, value, maxLen) => {
     arr.push(value);
     if (arr.length > maxLen) {
@@ -90,12 +142,33 @@ const getTimeStamp = (time) => {
     return timeStamp;
 }
 
-/* Initialize Temperature and Humidity charts. */
-fetchHumidityHistory();
-fetchTemperatureHistory();
+/* We first define a function to extract the parameters from the request query.
+You do not need to be connected too much with its implementation, although you could always study it as an exercise. */
+const getParameterByName = (name) {
+    const url = window.location.href;
+    name = name.replace(/[\[\]]/g, '\\$&');
+    const regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)');
+    const results = regex.exec(url);
+    if(!url) return null;
+    if(!url[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, ''));
+}
 
-/* Call the above defined function at regular intervals */
-setInterval(() => {
-    fetchTemperature();
-    fetchHumidity();
-}, 2000);
+if(!getParameterByName('start') && !getParameterByName('end')){
+    /* The fechTemperature and fetchHumidity calls are now moved here and are called only when the 'start' and 'end' parameters are not present in the query.
+    In this case, we will be showing the live reading implementation. */
+
+    /* Initialize Temperature and Humidity charts. */
+    fetchHumidityHistory();
+    fetchTemperatureHistory();
+
+    /* Call the above defined function at regular intervals */
+    setInterval(() => {
+        fetchTemperature();
+        fetchHumidity();
+    }, 2000);
+} else {
+    /* If we do have these parameters, we will only be showing the range of readings requested by calling the functions we defined in this section. */
+    fetchTemperatureRange();
+    fetchHumidityRange();
+}
