@@ -4,6 +4,53 @@ const app = express();
 const getCachedSensorReadings = require('./get-cached-sensor-readings');
 const databaseOperations = require('./database-operations');
 
+/**
+ * Import the external dependencies required, for us this is:
+    * 1. The native http module
+    * 2. The socket.io module that we installed
+    * 3. The subscribe and unsubscribe functions from the 
+notifier module
+    */
+const http = require('http')
+const socketIo = require('socket.io')
+const {subscribe, unsubscribe} = require('./notifier')
+
+/** Create a new HTTP server that wraps the "app" object that define our server. */
+const httpServer = http.Server(app);
+
+/** Socket.io implements its own route on the top of the existing onew by wrapping our HTTP server. */
+const io = socketIo(httpServer);
+
+io.on('connection', socket => {
+    /** This callback is called every time a new client succesfully makes a wesocket connection with our server. */
+    console.log('User connected [${socket.id}]');
+    /** The event listeners are defined inside the callback function because we need to access the "socket" instance,   
+    to emit changes to the client.
+    The "pushTemperature" and "pushHumidity" listeners are called on change of temperature and humidity respectively.
+    */
+    const pushTemperature = newTemperature => {
+        socket.emit('new-temperature', {
+            value: newTemperature
+        })
+    };
+
+    const pushHumidity = newHumidity => {
+        socket.emit('new-humidity', {
+            value: newHumidity
+        })
+    };
+
+    /** Subscribe the listeners that we just defined to the "temperature" and "humidity" events*/
+    subscribe(pushTemperature, 'temperature');
+    subscribe(pushHumidity, 'humidity');
+
+    socket.on('disconnect', () => {
+    /** Finally, when the connection is closed, unsubscribe the listeners from their events */
+        unsubscribe(pushTemperature, 'temperature');
+        unsubscribe(pushHumidity, 'humidity');
+    });
+});
+
 /* Here, we are introduced to express middleware.
 Middleware is a fancy word to describe a set of actions that have to take place before the request handler.
 In the below statement, we use the express static middleware, and bind it to the /public route.*/
@@ -101,7 +148,13 @@ app.get('/humidity/average', (req, res) => {
     });
 });
 
-// Opening the server on port 3000
-app.listen(3000, () => {
-    console.log('Server listening on port 3000');
+/** The httpsServer.listen method is called. This exposes the routes we defined for the "app" instance as well.*/
+httpServer.listen(3000, function () {
+    console.log('Server listening on port 3000')
 });
+  
+/** The app.listen method invocation from the previous version is removed, in place of the httpServer.listen method. */
+// Opening the server on port 3000
+// app.listen(3000, () => {
+//     console.log('Server listening on port 3000');
+// });
