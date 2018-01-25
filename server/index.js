@@ -18,11 +18,11 @@ const {subscribe, unsubscribe} = require('./notifier')
 /** Create a new HTTP server that wraps the "app" object that define our server. */
 const httpServer = http.Server(app);
 
-/** Socket.io implements its own route on the top of the existing onew by wrapping our HTTP server. */
+/** Socket.io implements its own route on the top of the existing ones by wrapping our HTTP server. */
 const io = socketIo(httpServer);
 
 io.on('connection', socket => {
-    /** This callback is called every time a new client succesfully makes a wesocket connection with our server. */
+    /** This callback is called every time a new client successfully makes a websocket connection with our server. */
     console.log('User connected [${socket.id}]');
     /** The event listeners are defined inside the callback function because we need to access the "socket" instance,   
     to emit changes to the client.
