@@ -20,9 +20,9 @@ setInterval( () => {
             return console.error(err);
         }
         /* Logging live sensor readings */
-        // console.log('Live sensor readings: ' + Date());
-        // console.log('Temperature: ' + temperature);
-        // console.log('Humidity: ' + humidity + '\n');
+        console.log('Live sensor readings: ' + Date());
+        console.log('Temperature: ' + temperature);
+        console.log('Humidity: ' + humidity + '\n');
 
         /* In addition to storing the readings in our cache, we also store them in our database, using the methods that we exported from our module. */
         databaseOperations.insertReadings('temperature', temperature);
@@ -31,9 +31,13 @@ setInterval( () => {
         /* Check whether the incoming values from the sensor are the same as the previous value (that were stored in the cache).
         If they are different, notify all listener of the given type. */
         if(cache.temperature != temperature) {
+            console.log('Live temperature change detected: ' + Date());
+            console.log('Temperature: ' + temperature);
             notify(temperature, 'temperature');
         }
         if(cache.humidity != humidity) {
+            console.log('Live humidity change detected: ' + Date());
+            console.log('Humidity: ' + humidity + '\n');
             notify(humidity, 'humidity');
         }
 
