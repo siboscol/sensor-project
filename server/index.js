@@ -23,7 +23,7 @@ const io = socketIo(httpServer);
 
 io.on('connection', socket => {
     /** This callback is called every time a new client successfully makes a websocket connection with our server. */
-    console.log('User connected [${socket.id}]');
+    console.log(`User connected [${socket.id}]`);
     /** The event listeners are defined inside the callback function because we need to access the "socket" instance,   
     to emit changes to the client.
     The "pushTemperature" and "pushHumidity" listeners are called on change of temperature and humidity respectively.
