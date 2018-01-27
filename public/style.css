@@ -4,14 +4,14 @@ body {
 }
 
 .container {
-    /* display: flex; */
+    display: flex;
     font-family: sans-serif;
     width: 100%;
     background-color: bisque;
 }
 
 .container > div {
-    width: 60%;
+    width: 40%;
     margin: 20px auto;
     text-align: center;
     border-radius: 10px;
