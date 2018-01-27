@@ -42,8 +42,8 @@ const fetchTemperatureHistory = () => {
             Format the time and push data on the chart similar to the previous API calls. */
             const time = new Date(readings.createdAt + 'Z');
             const formattedTime = getTimeStamp(time);
-            pushData(temperatureChartConfig.data.labels, formattedTime, 10);
-            pushData(temperatureChartConfig.data.datasets[0].data, readings.value, 10);
+            pushData(temperatureChartConfig.data.labels, formattedTime, 50);
+            pushData(temperatureChartConfig.data.datasets[0].data, readings.value, 50);
             temperatureChart.update();
         });
     });
@@ -97,8 +97,8 @@ const fetchHumidityHistory = () => {
         data.forEach(readings => {
             const time = new Date(readings.createdAt + 'Z');
             const formattedTime = getTimeStamp(time);
-            pushData(humidityChartConfig.data.labels, formattedTime, 10);
-            pushData(humidityChartConfig.data.datasets[0].data, readings.value, 10);
+            pushData(humidityChartConfig.data.labels, formattedTime, 50);
+            pushData(humidityChartConfig.data.datasets[0].data, readings.value, 50);
             temperatureChart.update();
         });
     });
