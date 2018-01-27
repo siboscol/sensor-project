@@ -174,7 +174,7 @@ const addSocketListeners = () => {
     socket.on('new-temperature', data => {
         const timeNow = getTimeStamp();
         pushData(temperatureChartConfig.data.labels, timeNow, 10);
-        pushData(temperatureChartConfig.data.datasets[0].date, date.value, 10);
+        pushData(temperatureChartConfig.data.datasets[0].data, data.value, 10);
         temperatureChart.update();
         temperatureDisplay.innerHTML = '<strong>' + data.value + '</strong>';
     });
@@ -185,7 +185,7 @@ const addSocketListeners = () => {
     socket.on('new-humidity', data => {
         const timeNow = getTimeStamp();
         pushData(humidityChartConfig.data.labels, timeNow, 10);
-        pushData(humidityChartConfig.data.datasets[0].date, date.value, 10);
+        pushData(humidityChartConfig.data.datasets[0].data, data.value, 10);
         humidityChart.update();
         humidityDisplay.innerHTML = '<strong>' + data.value + '</strong>';
     });

@@ -30,13 +30,13 @@ io.on('connection', socket => {
     */
     const pushTemperature = newTemperature => {
         socket.emit('new-temperature', {
-            value: newTemperature
+            value: newTemperature.toFixed(1)
         })
     };
 
     const pushHumidity = newHumidity => {
         socket.emit('new-humidity', {
-            value: newHumidity
+            value: newHumidity.toFixed(1)
         })
     };
 
