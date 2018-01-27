@@ -12,7 +12,7 @@ const listeners = {
  * (either the temperature listener array, or the humidity listener array, depending on the "type" provided).
  */
 const subscribe = (listener, type) => {
-    listeners[type].push(listeners);
+    listeners[type].push(listener);
 };
 
 /**

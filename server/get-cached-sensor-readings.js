@@ -20,9 +20,9 @@ setInterval( () => {
             return console.error(err);
         }
         /* Logging live sensor readings */
-        console.log('Live sensor readings: ' + Date());
-        console.log('Temperature: ' + temperature);
-        console.log('Humidity: ' + humidity + '\n');
+        // console.log('Live sensor readings: ' + Date());
+        // console.log('Temperature: ' + temperature);
+        // console.log('Humidity: ' + humidity + '\n');
 
         /* In addition to storing the readings in our cache, we also store them in our database, using the methods that we exported from our module. */
         databaseOperations.insertReadings('temperature', temperature);
