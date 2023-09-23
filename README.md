@@ -1,6 +1,24 @@
-# sensor-project
+# Sensor-Project
 
 Web app to display current temperature and humidity of the room with Raspberry Pi and a temperature sensor
+
+## Setup
+
+Connect the sensor according to following diagram
+![Connecting DHT22 diagram](Wiring_diagram_for_connecting_the_DHT22_sensor_to_the_RPi.jpg "Wiring diagram for connecting the DHT22 to the RPI")
+
+Install project dependencies
+
+```
+cd server
+npm install
+```
+
+Run the app
+```
+cd server
+node index.js
+```
 
 Notes:
 
