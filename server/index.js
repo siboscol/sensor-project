@@ -53,9 +53,9 @@ io.on('connection', socket => {
 
 /* Here, we are introduced to express middleware.
 Middleware is a fancy word to describe a set of actions that have to take place before the request handler.
-In the below statement, we use the express static middleware, and bind it to the /public route.*/
+In the below statement, we use the express static middleware, and bind it to the / route.*/
 // Getting parent dir folder with '../'
-app.use('/public', express.static(path.join(__dirname, '../', 'public')));
+app.use(express.static(path.join(__dirname, '../', 'public')));
 
 // Temperature Routes
 app.get('/temperature', (req, res) => {
