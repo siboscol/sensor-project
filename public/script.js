@@ -202,6 +202,8 @@ if(!getParameterByName('start') && !getParameterByName('end')){
     /* Initialize Temperature and Humidity charts. */
     fetchHumidityHistory();
     fetchTemperatureHistory();
+    fetchTemperature();
+    fetchHumidity();
 } else {
     fetchTemperatureRange();
     fetchHumidityRange();
