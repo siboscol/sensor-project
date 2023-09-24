@@ -13,7 +13,7 @@ notifier module
 */
 const http = require('http')
 const socketIo = require('socket.io')
-const {subscribe, unsubscribe} = require('./notifier')
+const { subscribe, unsubscribe } = require('./notifier')
 
 /** Create a new HTTP server that wraps the "app" object that define our server. */
 const httpServer = http.Server(app);
@@ -45,7 +45,7 @@ io.on('connection', socket => {
     subscribe(pushHumidity, 'humidity');
 
     socket.on('disconnect', () => {
-    /** Finally, when the connection is closed, unsubscribe the listeners from their events */
+        /** Finally, when the connection is closed, unsubscribe the listeners from their events */
         unsubscribe(pushTemperature, 'temperature');
         unsubscribe(pushHumidity, 'humidity');
     });
@@ -66,7 +66,7 @@ app.get('/temperature', (req, res) => {
 
 app.get('/temperature/history', (req, res) => {
     databaseOperations.fetchLastReadings('temperature', 10, (err, results) => {
-        if(err){
+        if (err) {
             /* If any error occued, send a 500 status to the frontend and log it. */
             console.error(err);
             res.status(500).end();
@@ -77,13 +77,18 @@ app.get('/temperature/history', (req, res) => {
 });
 
 app.get('/temperature/range', (req, res) => {
-    /* Here, the "start" and "end" datatimes for the range of readings are expected to be received through the query parameters.
-    This is splitted as part of the URL request. */
-    const {start, end} = req.query;
+    /* Here, the "start" and "end" datatimes (i.e 2023-09-24 19:14:15) for the range of readings are expected to be received through the query parameters.
+    This is splitted as part of the URL request. If missing it uses today's start and end datetime. */
+    let { start, end } = req.query;
+    if (!start && !end) {
+        const today = getTodayStartEnd();
+        start = today.start;
+        end = today.end;
+    }
 
     /* The "fetchReadingBetweenTime" method is called, which returns an array of results, which we return as JSON to the client side. */
     databaseOperations.fetchReadingBetweenTime('temperature', start, end, (err, results) => {
-        if(err) {
+        if (err) {
             console.error(err);
             return res.status(500).end();
         }
@@ -92,9 +97,14 @@ app.get('/temperature/range', (req, res) => {
 });
 
 app.get('/temperature/average', (req, res) => {
-    const {start, end} = req.query;
+    let { start, end } = req.query;
+    if (!start && !end) {
+        const today = getTodayStartEnd();
+        start = today.start;
+        end = today.end;
+    }
     databaseOperations.getAvarageOfReadingsBetweenTime('temperature', start, end, (err, results) => {
-        if(err) {
+        if (err) {
             console.error(err);
             return res.status(500).end();
         }
@@ -114,7 +124,7 @@ app.get('/humidity', (req, res) => {
 
 app.get('/humidity/history', (req, res) => {
     databaseOperations.fetchLastReadings('humidity', 10, (err, results) => {
-        if(err){
+        if (err) {
             /* If any error occued, send a 500 status to the frontend and log it. */
             console.error(err);
             res.status(500).end();
@@ -125,9 +135,14 @@ app.get('/humidity/history', (req, res) => {
 });
 
 app.get('/humidity/range', (req, res) => {
-    const {start, end} = req.query;
+    let { start, end } = req.query;
+    if (!start && !end) {
+        const today = getTodayStartEnd();
+        start = today.start;
+        end = today.end;
+    }
     databaseOperations.fetchReadingBetweenTime('humidity', start, end, (err, results) => {
-        if(err) {
+        if (err) {
             console.error(err);
             return res.status(500).end();
         }
@@ -136,9 +151,14 @@ app.get('/humidity/range', (req, res) => {
 });
 
 app.get('/humidity/average', (req, res) => {
-    const {start, end} = req.query;
+    let { start, end } = req.query;
+    if (!start && !end) {
+        const today = getTodayStartEnd();
+        start = today.start;
+        end = today.end;
+    }
     databaseOperations.getAvarageOfReadingsBetweenTime('humidity', start, end, (err, results) => {
-        if(err) {
+        if (err) {
             console.error(err);
             return res.status(500).end();
         }
@@ -153,9 +173,27 @@ const port = process.env.PORT || 3000;
 httpServer.listen(port, function () {
     console.log(`Server listening on port ${port}`)
 });
-  
-/** The app.listen method invocation from the previous version is removed, in place of the httpServer.listen method. */
-// Opening the server on port 3000
-// app.listen(3000, () => {
-//     console.log('Server listening on port 3000');
-// });
+
+const getTodayStartEnd = () => {
+    const today = new Date();
+    const end = getDateTime(today);
+    // Set the time components to the beginning of the day (midnight)
+    today.setHours(0, 0, 0, 0);
+    const start = getDateTime(today)
+    return { start, end }
+}
+
+const getDateTime = (date) => {
+    // Extract the date components
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0'); // Add 1 to month since it's zero-based
+    const day = String(date.getDate()).padStart(2, '0');
+
+    // Extract the time components
+    const hours = String(date.getHours()).padStart(2, '0');
+    const minutes = String(date.getMinutes()).padStart(2, '0');
+    const seconds = String(date.getSeconds()).padStart(2, '0');
+
+    // Create the formatted date string
+    return`${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
