@@ -4,6 +4,7 @@
   "description": "The server application for this project",
   "main": "index.js",
   "scripts": {
+    "start": "node server/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "siboscol",

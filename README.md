@@ -5,7 +5,7 @@ Web app to display current temperature and humidity of the room with Raspberry P
 ## Setup
 
 Connect the sensor according to following diagram
-![Connecting DHT22 diagram](Wiring_diagram_for_connecting_the_DHT22_sensor_to_the_RPi.jpg "Wiring diagram for connecting the DHT22 to the RPI")
+![Connecting DHT22 diagram](diagram.jpg "Wiring diagram for connecting the DHT22 to the RPI")
 
 ### Install project dependencies 
 
@@ -24,7 +24,6 @@ npm install sqlite3 --build-from-source --sqlite=/usr/
 
 Install the rest of the project dependencie
 ```
-cd server
 npm install
 ```
 
@@ -36,7 +35,7 @@ sudo npm install -g pm2
 
 Run the app
 ```
-node server/index.js
+npm start
 ```
 
 Notes:

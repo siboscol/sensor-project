@@ -10,7 +10,7 @@ const databaseOperations = require('./database-operations');
     * 2. The socket.io module that we installed
     * 3. The subscribe and unsubscribe functions from the 
 notifier module
-    */
+*/
 const http = require('http')
 const socketIo = require('socket.io')
 const {subscribe, unsubscribe} = require('./notifier')
@@ -148,9 +148,10 @@ app.get('/humidity/average', (req, res) => {
     });
 });
 
+const port = process.env.PORT || 3000;
 /** The httpsServer.listen method is called. This exposes the routes we defined for the "app" instance as well.*/
-httpServer.listen(3000, function () {
-    console.log('Server listening on port 3000')
+httpServer.listen(port, function () {
+    console.log(`Server listening on port ${port}`)
 });
   
 /** The app.listen method invocation from the previous version is removed, in place of the httpServer.listen method. */
