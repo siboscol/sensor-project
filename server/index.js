@@ -168,6 +168,18 @@ app.get('/humidity/average', (req, res) => {
     });
 });
 
+app.get('/readings/today', (req, res) => {
+    const {start, end } = getTodayStartEnd();
+
+    databaseOperations.fetchTodayReadings('temperature', start, end, (err, results) => {
+        if (err) {
+            console.error(err);
+            return res.status(500).end();
+        }
+        return res.json(results);
+    });
+});
+
 const port = process.env.PORT || 3000;
 /** The httpsServer.listen method is called. This exposes the routes we defined for the "app" instance as well.*/
 httpServer.listen(port, function () {
