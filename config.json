@@ -1,0 +1,16 @@
+{
+  "name": "sensor-project",
+  "version": "1.0.0",
+  "slug": "node_sensor",
+  "description": "Custom Node.js server exposing temperature/humidity endpoints",
+  "arch": ["armv7", "armhf"],
+  "startup": "services",
+  "boot": "auto",
+  "ports": {
+    "3000/tcp": 3000
+  },
+  "host_network": true,
+  "map": ["config:rw"],
+  "options": {},
+  "schema": {}
+}
